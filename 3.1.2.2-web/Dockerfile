@@ -6,7 +6,7 @@ FROM oraclelinux:6
 MAINTAINER King Chung Huang <kchuang@ucalgary.ca>
 
 # Set environment variables and default password for user 'admin'
-ENV GLASSFISH_PKG=glassfish-3.1.2.2-web.zip \
+ENV GLASSFISH_PKG=/tmp/glassfish-3.1.2.2-web.zip \
     GLASSFISH_URL=http://download.java.net/glassfish/3.1.2.2/release/glassfish-3.1.2.2-web.zip \
     GLASSFISH_HOME=/usr/local/glassfish3 \
     MD5=ae8e17e9dcc80117cb4b39284302763f \
@@ -17,12 +17,12 @@ ENV GLASSFISH_PKG=glassfish-3.1.2.2-web.zip \
 # Install packages, download and extract GlassFish
 # Setup password file
 # Enable DAS
-RUN yum -y install wget unzip java-1.7.0-openjdk-devel && \
-    wget --quiet --no-check-certificate $GLASSFISH_URL && \
+RUN yum -y install unzip java-1.7.0-openjdk-devel && \
+    curl -L -o $GLASSFISH_PKG $GLASSFISH_URL && \
     echo "$MD5 *$GLASSFISH_PKG" | md5sum -c - && \
     unzip -o $GLASSFISH_PKG -d /usr/local && \
     rm -f $GLASSFISH_PKG && \
-    yum -y remove wget unzip && rm -rf /var/cache/yum/* && \
+    yum -y remove unzip && rm -rf /var/cache/yum/* && \
     echo "--- Setup the password file ---" && \
     echo "AS_ADMIN_PASSWORD=" > /tmp/glassfishpwd && \
     echo "AS_ADMIN_NEWPASSWORD=${PASSWORD}" >> /tmp/glassfishpwd  && \
