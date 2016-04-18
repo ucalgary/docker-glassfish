@@ -8,9 +8,9 @@ MAINTAINER King Chung Huang <kchuang@ucalgary.ca>
 # Set environment variables and default password for user 'admin'
 ENV GLASSFISH_PKG=glassfish-3.1.2.2.zip \
     GLASSFISH_URL=http://download.java.net/glassfish/3.1.2.2/release/glassfish-3.1.2.2.zip \
-    GLASSFISH_HOME=/glassfish3 \
+    GLASSFISH_HOME=/usr/local/glassfish3 \
     MD5=ae8e17e9dcc80117cb4b39284302763f \
-    PATH=$PATH:/glassfish3/bin \
+    PATH=$PATH:/usr/local/glassfish3/bin \
     PASSWORD=Gla55F1sh4dm1n \
     JAVA_HOME=/usr/lib/jvm/java-openjdk
 
@@ -20,7 +20,7 @@ ENV GLASSFISH_PKG=glassfish-3.1.2.2.zip \
 RUN yum -y install wget unzip java-1.7.0-openjdk-devel && \
     wget --quiet --no-check-certificate $GLASSFISH_URL && \
     echo "$MD5 *$GLASSFISH_PKG" | md5sum -c - && \
-    unzip -o $GLASSFISH_PKG && \
+    unzip -o $GLASSFISH_PKG -d /usr/local && \
     rm -f $GLASSFISH_PKG && \
     yum -y remove wget unzip && rm -rf /var/cache/yum/* && \
     echo "--- Setup the password file ---" && \
@@ -36,6 +36,8 @@ RUN yum -y install wget unzip java-1.7.0-openjdk-devel && \
 
 # Ports being exposed
 EXPOSE 4848 8080 8181
+
+WORKDIR /usr/local/glassfish3
 
 # Start asadmin console and the domain
 CMD ["asadmin", "start-domain", "-v"]
