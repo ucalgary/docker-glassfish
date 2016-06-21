@@ -29,4 +29,4 @@ EXPOSE 4848 8080 8181
 WORKDIR /usr/local/glassfish3
 
 # Start asadmin console and the domain
-CMD ["asadmin", "start-domain", "-v"]
+CMD ["asadmin", "start-domain", "--verbose"]
