@@ -1,7 +1,7 @@
-# GlassFish 3.1.2.2 with Oracle Linux 6 and OpenJDK 7
+# GlassFish 3.1.2.2 with OpenJDK 7 on Alpine
 # Based on both glassfish and oracle/glassfish in Docker Hub
 
-FROM oraclelinux:6
+FROM java:7-jdk-alpine
 
 MAINTAINER King Chung Huang <kchuang@ucalgary.ca>
 
@@ -11,18 +11,15 @@ ENV GLASSFISH_PKG=/tmp/glassfish-3.1.2.2.zip \
     GLASSFISH_HOME=/usr/local/glassfish3 \
     MD5=ae8e17e9dcc80117cb4b39284302763f \
     PATH=$PATH:/usr/local/glassfish3/bin \
-    PASSWORD=Gla55F1sh4dm1n \
-    JAVA_HOME=/usr/lib/jvm/java-openjdk
+    PASSWORD=Gla55F1sh4dm1n
 
 # Install packages, download and extract GlassFish
 # Setup password file
 # Enable DAS
-RUN yum -y install unzip java-1.7.0-openjdk-devel && \
-    curl -L -o $GLASSFISH_PKG $GLASSFISH_URL && \
+RUN wget -q -O $GLASSFISH_PKG $GLASSFISH_URL && \
     echo "$MD5 *$GLASSFISH_PKG" | md5sum -c - && \
     unzip -o $GLASSFISH_PKG -d /usr/local && \
     rm -f $GLASSFISH_PKG && \
-    yum -y remove unzip && rm -rf /var/cache/yum/* && \
     echo "--- Setup the password file ---" && \
     echo "AS_ADMIN_PASSWORD=" > /tmp/glassfishpwd && \
     echo "AS_ADMIN_NEWPASSWORD=${PASSWORD}" >> /tmp/glassfishpwd  && \
