@@ -18,6 +18,11 @@ RUN wget -q -O $GLASSFISH_PKG $GLASSFISH_URL && \
     unzip -o $GLASSFISH_PKG -d /usr/local && \
     rm -f $GLASSFISH_PKG && \
 
+    # Remove Windows .bat and .exe files to save space
+    cd $GLASSFISH_HOME && \
+    find . -name '*.bat' -delete && \
+    find . -name '*.exe' -delete
+
 # Ports being exposed
 EXPOSE 4848 8080 8181
 
