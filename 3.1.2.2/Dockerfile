@@ -28,5 +28,9 @@ EXPOSE 4848 8080 8181
 
 WORKDIR /usr/local/glassfish3
 
-# Start asadmin console and the domain
+# Copy in and set the entrypoint
+COPY entrypoint.sh $GLASSFISH_HOME/entrypoint.sh
+ENTRYPOINT ["/usr/local/glassfish3/entrypoint.sh"]
+
+# Start the GlassFish domain
 CMD ["asadmin", "start-domain", "--verbose"]
