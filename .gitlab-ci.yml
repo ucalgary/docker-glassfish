@@ -1,0 +1,8 @@
+# Official docker image.
+image: docker:latest
+
+build:
+  stage: build
+  script:
+    - docker build -t docker.ucalgary.ca/rms/glassfish:3.1.2.2 .
+    - docker build -t docker.ucalgary.ca/rms/glassfish:latest .
