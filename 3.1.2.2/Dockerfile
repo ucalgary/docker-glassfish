@@ -29,8 +29,8 @@ EXPOSE 4848 8080 8181
 WORKDIR /usr/local/glassfish3
 
 # Copy in and set the entrypoint
-COPY entrypoint.sh $GLASSFISH_HOME/entrypoint.sh
-ENTRYPOINT ["/usr/local/glassfish3/entrypoint.sh"]
+COPY docker-entrypoint.sh $GLASSFISH_HOME/
+ENTRYPOINT ["/usr/local/glassfish3/docker-entrypoint.sh"]
 
 # Start the GlassFish domain
 CMD ["asadmin", "start-domain", "--verbose"]
