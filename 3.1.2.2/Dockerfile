@@ -1,7 +1,7 @@
 # GlassFish 3.1.2.2 with OpenJDK 7 on Alpine
 # Based on both glassfish and oracle/glassfish in Docker Hub
 
-FROM java:7-jdk-alpine
+FROM java:7u91-jdk-alpine
 
 MAINTAINER King Chung Huang <kchuang@ucalgary.ca>
 
