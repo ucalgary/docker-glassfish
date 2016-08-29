@@ -3,17 +3,28 @@ services:
 
 stages:
   - build
-  - deploy
+  - release
+
+variable:
+  CONTAINER_IMAGE_NAME: docker.ucalgary.ca/rms/glassfish
+  CONTAINER_IMAGE_TAG: 3.1.2.2
 
 before_script:
-  - docker info
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.ucalgary.ca
 
 build:
   stage: build
   script:
-    - docker build -t docker.ucalgary.ca/rms/glassfish:3.1.2.2 -t docker.ucalgary.ca/rms/glassfish:latest 3.1.2.2/.
-    
-push:
-  stage: deploy
+    - docker build --pull -t $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_TAG/.
+    - docker push $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME
+
+release:
+  stage: release
   script:
-    - docker push docker.ucalgary.ca/rms/glassfish
+    - docker pull $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME
+    - docker tag $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_NAME:$CONTAINER_IMAGE_TAG
+    - docker tag $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_NAME:latest
+    - docker push $CONTAINER_IMAGE_NAME:$CONTAINER_IMAGE_TAG
+    - docker push $CONTAINER_IMAGE_NAME:latest
+  only:
+    - master
