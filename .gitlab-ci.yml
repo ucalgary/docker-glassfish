@@ -1,3 +1,6 @@
+services:
+  - docker:1.12.1-dind
+
 stages:
   - build
   - deploy
