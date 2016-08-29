@@ -1,8 +1,15 @@
-# Official docker image.
-image: docker:latest
+image: docker:1.12.1-git
+
+stages:
+  - build
+  - deploy
 
 build:
   stage: build
   script:
-    - docker build -t docker.ucalgary.ca/rms/glassfish:3.1.2.2 .
-    - docker build -t docker.ucalgary.ca/rms/glassfish:latest .
+    - docker build -t docker.ucalgary.ca/rms/glassfish:3.1.2.2 -t docker.ucalgary.ca/rms/glassfish:latest 3.1.2.2/.
+    
+push:
+  stage: deploy
+  script:
+    - docker push docker.ucalgary.ca/rms/glassfish
