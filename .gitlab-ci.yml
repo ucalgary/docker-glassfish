@@ -5,7 +5,7 @@ stages:
   - build
   - release
 
-variable:
+variables:
   CONTAINER_IMAGE_NAME: docker.ucalgary.ca/rms/glassfish
   CONTAINER_IMAGE_TAG: 3.1.2.2
 
