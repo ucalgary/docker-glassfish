@@ -1,30 +1,27 @@
-services:
-  - docker:1.12.1-dind
-
 stages:
   - build
   - release
 
 variables:
-  CONTAINER_IMAGE_NAME: docker.ucalgary.ca/rms/glassfish
   CONTAINER_IMAGE_TAG: 3.1.2.2
 
 before_script:
-  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN docker.ucalgary.ca
+  - if [ -n "${CI_BUILD_TOKEN}" ]; then docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; fi
 
 build:
   stage: build
   script:
-    - docker build --pull -t $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_TAG/.
-    - docker push $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME
+    - if [ -z ${CI_REGISTRY_IMAGE+x} ]; then export CI_REGISTRY_IMAGE=`basename $CI_BUILD_REPO`; fi
+    - docker build --pull -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_TAG/.
+    - if [ -n "${CI_BUILD_TOKEN}" ]; then docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME; fi
 
 release:
   stage: release
   script:
-    - docker pull $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME
-    - docker tag $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_NAME:$CONTAINER_IMAGE_TAG
-    - docker tag $CONTAINER_IMAGE_NAME:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_NAME:latest
-    - docker push $CONTAINER_IMAGE_NAME:$CONTAINER_IMAGE_TAG
-    - docker push $CONTAINER_IMAGE_NAME:latest
+    - docker pull $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:$CONTAINER_IMAGE_TAG
+    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE:$CONTAINER_IMAGE_TAG
+    - docker push $CI_REGISTRY_IMAGE:latest
   only:
     - master
