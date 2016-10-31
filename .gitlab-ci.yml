@@ -11,6 +11,7 @@ before_script:
 build:
   stage: build
   script:
+    - if [ -z ${CI_REGISTRY_IMAGE+x} ]; then export CI_REGISTRY_IMAGE=`basename $CI_BUILD_REPO`; fi
     - docker build --pull -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_TAG/.
     - if [ -n "${CI_BUILD_TOKEN}" ]; then docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME; fi
 
