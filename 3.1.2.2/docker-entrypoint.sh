@@ -8,15 +8,6 @@ if [ "$1" = 'asadmin' ]; then
         # Change the admin password
         asadmin --user=admin --passwordfile=/tmp/glassfishpwd change-admin-password --domain_name domain1
 
-        if [ "$AS_ADMIN_ENABLE_SECURE" ]; then
-            echo "AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}" > /tmp/glassfishpwd
-            asadmin start-domain
-            asadmin --user=admin --passwordfile=/tmp/glassfishpwd enable-secure-admin
-            asadmin stop-domain
-        fi
-
-        rm /tmp/glassfishpwd
-
         # Log in the admin user
         # 
         # While using the `asadmin login` command is the proper way to do it,
@@ -30,9 +21,18 @@ if [ "$1" = 'asadmin' ]; then
         AS_ADMIN_PASSWORD_GFBASE64=`echo -n "$AS_ADMIN_PASSWORD" | base64`
         echo "asadmin://admin@localhost:4848 $AS_ADMIN_PASSWORD_GFBASE64" > /root/.asadminpass
 
+        if [ "$AS_ADMIN_ENABLE_SECURE" ]; then
+            echo "AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}" > /tmp/glassfishpwd
+            asadmin start-domain            
+            asadmin --user=admin --passwordfile=/tmp/glassfishpwd enable-secure-admin
+            asadmin stop-domain
+        fi
+
         # Call asadmin at least once to establish a trust with the
         # self-signed certificate for the admin API.
         asadmin --interactive=false version
+
+        rm /tmp/glassfishpwd
     fi
 
     exec "$@"
