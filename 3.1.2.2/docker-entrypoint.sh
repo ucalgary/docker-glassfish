@@ -16,6 +16,19 @@ if [ "$1" = 'asadmin' ]; then
         fi
 
         rm /tmp/glassfishpwd
+
+        # Log in the admin user
+        # 
+        # While using the `asadmin login` command is the proper way to do it,
+        # there doesn't seem to be a way to pipe input to respond to its
+        # interactive prompts for the username and password.
+        #
+        #   printf "admin\n${AS_ADMIN_PASSWORD}\n" | asadmin login
+        #
+        # Therefore, manually generate the .asadminpass file to "login".
+        
+        AS_ADMIN_PASSWORD_GFBASE64=`echo -n "$AS_ADMIN_PASSWORD" | base64`
+        echo "asadmin://admin@localhost:4848 $AS_ADMIN_PASSWORD_GFBASE64" > /root/.asadminpass
     fi
 
     exec "$@"
