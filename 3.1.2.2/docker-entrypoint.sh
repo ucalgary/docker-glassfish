@@ -29,6 +29,10 @@ if [ "$1" = 'asadmin' ]; then
         
         AS_ADMIN_PASSWORD_GFBASE64=`echo -n "$AS_ADMIN_PASSWORD" | base64`
         echo "asadmin://admin@localhost:4848 $AS_ADMIN_PASSWORD_GFBASE64" > /root/.asadminpass
+
+        # Call asadmin at least once to establish a trust with the
+        # self-signed certificate for the admin API.
+        asadmin --interactive=false version
     fi
 
     exec "$@"
