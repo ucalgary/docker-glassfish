@@ -20,6 +20,7 @@ if [ "$1" = 'asadmin' ]; then
         
         AS_ADMIN_PASSWORD_GFBASE64=`echo -n "$AS_ADMIN_PASSWORD" | base64`
         echo "asadmin://admin@localhost:4848 $AS_ADMIN_PASSWORD_GFBASE64" > /root/.asadminpass
+        chmod 600 /root/.asadminpass
 
         if [ "$AS_ADMIN_ENABLE_SECURE" ]; then
             echo "AS_ADMIN_PASSWORD=${AS_ADMIN_PASSWORD}" > /tmp/glassfishpwd
