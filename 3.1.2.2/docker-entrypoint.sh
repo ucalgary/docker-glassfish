@@ -30,7 +30,7 @@ if [ "$1" = 'asadmin' ]; then
             
             # Call asadmin at least once to establish a trust with the
             # self-signed certificate for the admin API.
-            asadmin --interactive=false version
+            # asadmin --interactive=false version
 
             asadmin stop-domain
         fi
