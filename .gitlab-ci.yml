@@ -6,10 +6,12 @@ stages:
 variables:
   BUILD_CONTEXT_PATH: 3.1.2.2
 
+before_script:
+  - if [ -z ${CI_REGISTRY_IMAGE+x} ]; then export CI_REGISTRY_IMAGE=`basename $CI_BUILD_REPO`; fi
+
 Build Image:
   stage: build
   before_script:
-    - if [ -z ${CI_REGISTRY_IMAGE+x} ]; then export CI_REGISTRY_IMAGE=`basename $CI_BUILD_REPO`; fi
     - if [ -n "${CI_BUILD_TOKEN}" ]; then docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY; fi
   script: 
     - docker build --pull -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $BUILD_CONTEXT_PATH
