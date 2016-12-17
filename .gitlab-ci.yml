@@ -1,3 +1,5 @@
+image: docker.ucalgary.ca/rms-utils/rms-ci:latest
+
 stages:
   - build
   - release
