@@ -2,7 +2,6 @@ image: docker.ucalgary.ca/rms-utils/rms-ci:latest
 
 stages:
   - build
-  - release
 
 variables:
   CONTAINER_IMAGE_TAG: 3.1.2.2
@@ -16,14 +15,3 @@ build:
     - if [ -z ${CI_REGISTRY_IMAGE+x} ]; then export CI_REGISTRY_IMAGE=`basename $CI_BUILD_REPO`; fi
     - docker build --pull -t $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CONTAINER_IMAGE_TAG/.
     - if [ -n "${CI_BUILD_TOKEN}" ]; then docker push $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME; fi
-
-release:
-  stage: release
-  script:
-    - docker pull $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
-    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:$CONTAINER_IMAGE_TAG
-    - docker tag $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME $CI_REGISTRY_IMAGE:latest
-    - docker push $CI_REGISTRY_IMAGE:$CONTAINER_IMAGE_TAG
-    - docker push $CI_REGISTRY_IMAGE:latest
-  only:
-    - master
