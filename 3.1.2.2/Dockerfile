@@ -32,3 +32,5 @@ ENTRYPOINT ["/usr/local/glassfish3/docker-entrypoint.sh"]
 
 # Start the GlassFish domain
 CMD ["asadmin", "start-domain", "--verbose"]
+
+LABEL maintainer="King Chung Huang <kchuang@ucalgary.ca>"
