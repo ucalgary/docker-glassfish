@@ -3,8 +3,6 @@
 
 FROM openjdk:7u121-jdk-alpine
 
-MAINTAINER King Chung Huang <kchuang@ucalgary.ca>
-
 # Set environment variables and default password for user 'admin'
 ENV GLASSFISH_PKG=/tmp/glassfish-3.1.2.2.zip \
     GLASSFISH_URL=http://download.java.net/glassfish/3.1.2.2/release/glassfish-3.1.2.2.zip \
@@ -17,7 +15,7 @@ RUN wget -q -O $GLASSFISH_PKG $GLASSFISH_URL && \
     echo "$MD5 *$GLASSFISH_PKG" | md5sum -c - && \
     unzip -o $GLASSFISH_PKG -d /usr/local && \
     rm -f $GLASSFISH_PKG && \
-
+    \
     # Remove Windows .bat and .exe files to save space
     cd $GLASSFISH_HOME && \
     find . -name '*.bat' -delete && \
@@ -34,3 +32,5 @@ ENTRYPOINT ["/usr/local/glassfish3/docker-entrypoint.sh"]
 
 # Start the GlassFish domain
 CMD ["asadmin", "start-domain", "--verbose"]
+
+LABEL maintainer="King Chung Huang <kchuang@ucalgary.ca>"
