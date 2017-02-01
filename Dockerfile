@@ -1,9 +1,6 @@
-# GlassFish 3.1.2.2 with OpenJDK 7 on Alpine
-# Based on both glassfish and oracle/glassfish in Docker Hub
-
 FROM openjdk:7u121-jdk-alpine
 
-# Set environment variables and default password for user 'admin'
+# Set environment variables
 ENV GLASSFISH_PKG=/tmp/glassfish-3.1.2.2.zip \
     GLASSFISH_URL=http://download.java.net/glassfish/3.1.2.2/release/glassfish-3.1.2.2.zip \
     GLASSFISH_HOME=/usr/local/glassfish3 \
@@ -33,4 +30,9 @@ ENTRYPOINT ["/usr/local/glassfish3/docker-entrypoint.sh"]
 # Start the GlassFish domain
 CMD ["asadmin", "start-domain", "--verbose"]
 
-LABEL maintainer="King Chung Huang <kchuang@ucalgary.ca>"
+LABEL maintainer="King Chung Huang <kchuang@ucalgary.ca>" \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.name="GlassFish" \
+      org.label-schema.version="3.1.2.2" \
+      org.label-schema.url="https://glassfish.java.net" \
+      org.label-schema.vcs-url="https://github.com/ucalgary/docker-glassfish"
