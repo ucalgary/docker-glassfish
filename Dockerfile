@@ -3,7 +3,7 @@
 
 FROM openjdk:7u121-jdk-alpine
 
-# Set environment variables and default password for user 'admin'
+# Set environment variables
 ENV GLASSFISH_PKG=/tmp/glassfish-3.1.2.2.zip \
     GLASSFISH_URL=http://download.java.net/glassfish/3.1.2.2/release/glassfish-3.1.2.2.zip \
     GLASSFISH_HOME=/usr/local/glassfish3 \
