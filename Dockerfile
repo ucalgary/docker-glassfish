@@ -30,4 +30,9 @@ ENTRYPOINT ["/usr/local/glassfish3/docker-entrypoint.sh"]
 # Start the GlassFish domain
 CMD ["asadmin", "start-domain", "--verbose"]
 
-LABEL maintainer="King Chung Huang <kchuang@ucalgary.ca>"
+LABEL maintainer="King Chung Huang <kchuang@ucalgary.ca>" \
+      org.label-schema.schema-version="1.0" \
+      org.label-schema.name="GlassFish" \
+      org.label-schema.version="3.1.2.2" \
+      org.label-schema.url="https://glassfish.java.net" \
+      org.label-schema.vcs-url="https://github.com/ucalgary/docker-glassfish"
