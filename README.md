@@ -30,4 +30,4 @@ $ docker run \
 
 ## Maintenance
 
-This image is currently maintained by the Research Management Systems project at the [University of Calgary](http://www.ucalgary.ca/).
+This image is currently maintained by the Research Management Systems project at the [University of Calgary](http://www.ucalgary.ca/). It is used to support specific applications requiring GlassFish 3.1.2.2 and will not be upgraded to GlassFish 4 or beyond.
