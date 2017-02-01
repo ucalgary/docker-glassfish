@@ -25,8 +25,7 @@ $ docker run --env AS_ADMIN_PASSWORD=abcd1234 -d ucalgary/glassfish
 Once an admin password is set, secure admin can be enabled to enable remote administration and encrypt all admin traffic. If `AS_ADMIN_ENABLE_SECURE` environment variable should be set to a non-empty value, the entrypoint script will call `asadmin enable-secure-admin` after setting the admin password. The image includes `EXPOSE 4848` for access to the remote admin port.
 
 ```
-$ docker run \
---env AS_ADMIN_PASSWORD=abcd1234 --env AS_ADMIN_ENABLE_SECURE=1 \
+$ docker run --env AS_ADMIN_PASSWORD=abcd1234 --env AS_ADMIN_ENABLE_SECURE=1 \
 -p 4848:4848 -d ucalgary/glassfish
 ```
 
