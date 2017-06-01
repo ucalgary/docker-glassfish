@@ -1,8 +1,8 @@
-FROM openjdk:7u121-jdk-alpine
+FROM openjdk:7u131-jdk-alpine
 
 # Set environment variables
 ENV GLASSFISH_PKG=/tmp/glassfish-3.1.2.2.zip \
-    GLASSFISH_URL=http://download.java.net/glassfish/3.1.2.2/release/glassfish-3.1.2.2.zip \
+    GLASSFISH_URL=http://download.oracle.com/glassfish/3.1.2.2/release/glassfish-3.1.2.2.zip \
     GLASSFISH_HOME=/usr/local/glassfish3 \
     MD5=ae8e17e9dcc80117cb4b39284302763f \
     PATH=$PATH:/usr/local/glassfish3/bin
