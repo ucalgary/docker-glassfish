@@ -1,4 +1,4 @@
-FROM openjdk:7u121-jdk-alpine
+FROM openjdk:7u131-jdk-alpine
 
 # Set environment variables
 ENV GLASSFISH_PKG=/tmp/glassfish-3.1.2.2.zip \
