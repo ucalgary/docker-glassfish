@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$1" = 'asadmin' ]; then
+if [ "$1" = 'asadmin' ] || [ "${3#asadmin}" != "$3" ]; then
     if [ "$AS_ADMIN_PASSWORD" ]; then
         echo "AS_ADMIN_PASSWORD=" > /tmp/glassfishpwd
         echo "AS_ADMIN_NEWPASSWORD=${AS_ADMIN_PASSWORD}" >> /tmp/glassfishpwd
